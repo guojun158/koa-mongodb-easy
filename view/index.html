@@ -1,0 +1,15 @@
+<!--layout.html-->
+{{extend './layout.html'}}
+
+{{block 'title'}}{{title}}{{/block}}
+
+{{block 'head'}}
+<link rel="stylesheet" href="/style/style.css">
+{{/block}}
+
+{{block 'content'}}
+  <div>
+    <%- subTitle %>
+    <%- content %>
+  </div>
+{{/block}}

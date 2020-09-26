@@ -1,0 +1,78 @@
+<!--index.art-->
+{{extend './layout.html'}}
+
+{{block 'title'}}{{title}}{{/block}}
+
+{{block 'head'}}
+<link rel="stylesheet" href="/style/style.css">
+{{/block}}
+
+{{block 'content'}}
+<div>
+  <div class="topbar">
+    <form action="/user/add" method="POST">
+      <label for="name">用户名：</label>
+      <input type="text" name="name">
+      <label for="age">年龄：</label>
+      <input type="text" name="age"> 
+      <label for="sex">
+        <input type="radio" value="1" name="sex" checked>男
+      </label>
+      <label for="sex">
+        <input type="radio" value="0" name="sex">女
+      </label>
+      <input type="submit" value="添加用户" />
+    </form>
+  </div>
+  <div class="line"></div>
+  <table class="hovertable" id="table">
+    <caption>用户管理</caption>
+    <tr>
+      <th>序号</th>
+      <th>姓名</th>
+      <th>年龄</th>
+      <th>性别</th>
+      <th>操作</th>
+    </tr>
+    {{each list}}
+    <tr class="form">
+      <form action="/user/update" method="post">
+      <td>{{$index + 1}} <input type="hidden" value="{{@$value._id}}" name="id"></td>
+      <td>
+          <span>{{$value.name}}</span>
+          <em style="display: none;"><input type="text" name="name" value="{{$value.name}}"></em>
+      </td>
+      <td>
+        <span>{{$value.age}}</span>
+        <em style="display: none;"><input type="text" name="age" value="{{$value.age}}"></em>
+      </td>
+      <td>
+        <span>{{$value.sex == '1' ? '男' : '女'}}</span>
+        <em style="display: none;">
+          {{if $value.sex == '1'}}
+          <label for="sex">
+            <input type="radio" value="1" name="sex" checked>男
+          </label>
+          <label for="sex">
+            <input type="radio" value="0" name="sex">女
+          </label>
+          {{else}}
+          <label for="sex">
+            <input type="radio" value="1" name="sex">男
+          </label>
+          <label for="sex">
+            <input type="radio" value="0" name="sex" checked>女
+          </label>
+          {{/if}}
+        </em>
+      </td>
+      <td>
+        <span><a href="#" class="edit">编辑</a> ｜ <a href="/user/delete/{{@$value._id}}">删除</a></span>
+        <em style="display: none;"><input type="submit" value="确认" /><input type="button" value="取消" class="close" /></em>
+      </td>
+      </form>
+    </tr>
+    {{/each}}
+  </table>
+</div>
+{{/block}}
